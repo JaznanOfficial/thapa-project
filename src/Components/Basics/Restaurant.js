@@ -3,14 +3,15 @@ import "./style.css";
 import Menu from "./MenuApi";
 import { useState } from "react";
 import MenuCard from "./MenuCard";
-
-
+import Navbar from "./Navbar";
 
 const uniqueList = [
-    
-    ...new Set(Menu.map(curElem => {
-    return curElem.category;
-}))]
+    ...new Set(
+        Menu.map((curElem) => {
+            return curElem.category;
+        })
+    ),
+];
 
 console.log(uniqueList);
 
@@ -18,20 +19,15 @@ const Restaurant = () => {
     const [menuData, setMenuData] = useState(Menu);
     // console.log(menuData);
     const filterItem = (category) => {
-        const updatedList = Menu.filter(currentElement => {
+        const updatedList = Menu.filter((currentElement) => {
             return currentElement.category === category;
         });
-        setMenuData(updatedList)
-
-    }
+        setMenuData(updatedList);
+    };
 
     return (
         <div>
-            <nav className="navbar">
-                <div className="btn-group">
-                    {uniqueList.map((category)=><button className="btn-group__item" onClick={()=>filterItem(`${category}`)}>{category}</button>)}
-                </div>
-                </nav>
+            <Navbar uniqueList={ uniqueList} filterItem={filterItem} />
             <div className="main-card--container">
                 {menuData.map((singleMenu, index) => (
                     <MenuCard menuData={singleMenu} key={index} />
